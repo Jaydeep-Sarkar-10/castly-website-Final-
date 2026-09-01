@@ -1,0 +1,111 @@
+.services-section {
+  padding: 160px 48px;
+  background-color: var(--bg-surface);
+}
+
+.services-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.services-header {
+  margin-bottom: 80px;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-item {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  padding: 48px 0;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.service-item:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.service-content {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.service-num {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  color: var(--text-secondary);
+}
+
+.service-title {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.service-item:hover .service-title {
+  transform: translateX(20px);
+  color: var(--accent);
+}
+
+.service-image-preview {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%) scale(0.95);
+  width: 400px;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.service-image-preview.active {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.service-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.services-list:hover .service-item:not(:hover) {
+  opacity: 0.3;
+}
+
+@media (max-width: 768px) {
+  .services-section {
+    padding: 100px 24px;
+  }
+  .service-item {
+    padding: 32px 0;
+  }
+  .service-content {
+    gap: 20px;
+  }
+  .service-item:hover .service-title {
+    transform: none;
+  }
+  .service-image-preview {
+    display: none;
+  }
+  .services-list:hover .service-item:not(:hover) {
+    opacity: 1;
+  }
+}

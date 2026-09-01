@@ -1,0 +1,38 @@
+.marquee-section {
+  padding: 80px 0;
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.marquee-container {
+  display: flex;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-content span {
+  font-family: var(--font-heading);
+  font-size: clamp(40px, 6vw, 80px);
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.marquee-content span.dot {
+  color: var(--accent);
+  font-family: var(--font-body);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Requires duplicate content for seamless, but basic transform works if content is long enough, let's duplicate in React or adjust animation */
+}
+
+/* Let's duplicate the content in App.css using a pseudo element or just duplicate in App.jsx for seamless loop */
