@@ -1,23 +1,38 @@
 .reels-section {
   padding: 160px 0;
   overflow: hidden;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
 }
 
 .reels-header {
   padding: 0 48px;
   margin-bottom: 60px;
+  max-width: 800px;
+}
+
+.reels-subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 16px;
 }
 
 .reels-scroll-container {
   width: 100%;
   overflow-x: auto;
   padding: 0 48px 48px 48px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
 .reels-scroll-container::-webkit-scrollbar {
-  display: none;
+  height: 4px;
+}
+
+.reels-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
 }
 
 .reels-gallery {
@@ -27,19 +42,22 @@
 }
 
 .reel-item {
-  width: 300px;
+  width: 320px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  cursor: pointer;
+  outline: none;
 }
 
 .reel-media {
   width: 100%;
   aspect-ratio: 9 / 16;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   position: relative;
   background: #111;
+  border: 1px solid var(--border);
 }
 
 .reel-media img {
@@ -50,15 +68,50 @@
   filter: brightness(0.85);
 }
 
-.reel-item:hover .reel-media img {
+.reel-item:hover .reel-media img,
+.reel-item:focus .reel-media img {
   transform: scale(1.05);
-  filter: brightness(1.1);
+  filter: brightness(1.05);
+}
+
+.reel-top-badges {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.reel-platform-tag {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.reel-duration {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  font-size: 11px;
+  color: var(--accent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 .reel-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%);
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 40%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,27 +119,29 @@
   transition: opacity 0.3s ease;
 }
 
-.reel-item:hover .reel-overlay {
+.reel-item:hover .reel-overlay,
+.reel-item:focus .reel-overlay {
   opacity: 1;
 }
 
 .reel-play-btn {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
+  background: rgba(15, 15, 15, 0.75);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  border: 1px solid rgba(255,255,255,0.2);
-  transform: scale(0.8);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255,255,255,0.25);
+  transform: scale(0.85);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
 }
 
 .reel-item:hover .reel-play-btn {
   transform: scale(1);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .reel-info {
@@ -96,7 +151,7 @@
 }
 
 .reel-title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   color: var(--text-primary);
   letter-spacing: -0.01em;
@@ -104,9 +159,9 @@
 
 .reel-category {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 @media (max-width: 768px) {
@@ -120,12 +175,12 @@
     padding: 0 24px 24px 24px;
   }
   .reel-item {
-    width: 260px;
+    width: 270px;
   }
   .reel-overlay {
-    opacity: 1; /* Keep play button visible on mobile */
+    opacity: 1; /* Keep play button visible on touch */
   }
   .reel-play-btn {
-    transform: scale(1);
+    transform: scale(0.9);
   }
 }

@@ -25,7 +25,7 @@
 }
 
 .tubelight-logo span {
-  color: var(--text-secondary);
+  color: var(--accent);
 }
 
 .tubelight-cta {
@@ -53,28 +53,48 @@
 }
 
 .tubelight-navbar-container {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background-color: rgba(0, 0, 0, 0.5);
+  gap: 6px;
+  background-color: rgba(10, 10, 10, 0.75);
   border: 1px solid var(--border);
-  backdrop-filter: blur(16px);
-  padding: 4px 6px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 5px 8px;
   border-radius: 9999px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Single Persistent Sliding Tubelight Indicator */
+.tubelight-lamp-indicator {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  z-index: 1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  will-change: transform, width;
 }
 
 .tubelight-nav-item {
   position: relative;
+  z-index: 2;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 600;
-  padding: 8px 24px;
+  font-weight: 500;
+  padding: 8px 20px;
   border-radius: 9999px;
-  transition: color 0.3s ease;
   color: var(--text-secondary);
   text-decoration: none;
   font-family: var(--font-body);
+  transition: color 0.25s ease;
+  user-select: none;
+  background: transparent !important;
 }
 
 .tubelight-nav-item:hover {
@@ -82,62 +102,62 @@
 }
 
 .tubelight-nav-item.active {
-  background-color: rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
+}
+
+.nav-item-text,
+.nav-item-icon {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
 }
 
 .nav-item-icon {
   display: none;
 }
 
-.tubelight-lamp-container {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 9999px;
-  z-index: -1;
-}
-
+/* Top illuminated tube */
 .tubelight-lamp-top {
   position: absolute;
-  top: -8px;
+  top: -6px;
   left: 50%;
   transform: translateX(-50%);
   width: 32px;
-  height: 4px;
-  background-color: #fff;
-  border-top-left-radius: 9999px;
-  border-top-right-radius: 9999px;
+  height: 3.5px;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.85), 0 0 22px 5px rgba(255, 255, 255, 0.4);
 }
 
+/* Layered glow blurs */
 .tubelight-lamp-blur {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.25);
   border-radius: 9999px;
+  pointer-events: none;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .tubelight-lamp-blur.blur-lg {
-  width: 48px;
+  width: 52px;
   height: 24px;
   top: -8px;
-  left: -8px;
-  filter: blur(12px);
+  filter: blur(14px);
 }
 
 .tubelight-lamp-blur.blur-md {
-  width: 32px;
-  height: 24px;
+  width: 36px;
+  height: 20px;
   top: -4px;
-  left: 0;
   filter: blur(8px);
 }
 
 .tubelight-lamp-blur.blur-sm {
-  width: 16px;
-  height: 16px;
-  top: 0;
-  left: 8px;
+  width: 20px;
+  height: 14px;
+  top: -2px;
   filter: blur(4px);
 }
 

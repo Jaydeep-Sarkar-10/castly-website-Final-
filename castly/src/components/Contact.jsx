@@ -1,69 +1,171 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Contact.css';
 
 export default function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    brand: '',
+    website: '',
+    service: '',
+    details: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
     <section className="contact-section" id="contact">
       <div className="contact-container">
         <div className="contact-header reveal">
+          <span className="section-label">Get In Touch</span>
           <h2 className="contact-title">Have a project in mind?</h2>
-          <p className="contact-subtitle">Let's create something that makes them stop and stay.</p>
+          <p className="contact-subtitle">
+            Let's turn your ideas into high-quality video stories that capture attention and drive growth.
+          </p>
         </div>
 
         <div className="contact-content">
-          <form className="contact-form reveal">
-            <div className="form-row">
-              <div className="form-group">
-                <label>Name</label>
-                <input type="text" placeholder="Your name" required />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" placeholder="your@email.com" required />
-              </div>
+          {submitted ? (
+            <div className="contact-success reveal">
+              <div className="success-icon">✓</div>
+              <h3 className="success-title">Message Received</h3>
+              <p className="success-desc">
+                Thank you, {formData.name || 'there'}! We're excited to learn more about your brand. Our creative team will review your inquiry and get back to you within 24 hours.
+              </p>
+              <button 
+                type="button" 
+                className="btn-secondary" 
+                onClick={() => setSubmitted(false)}
+                style={{ marginTop: '24px' }}
+              >
+                Send Another Inquiry
+              </button>
             </div>
-            
-            <div className="form-row">
-              <div className="form-group">
-                <label>Brand / Company</label>
-                <input type="text" placeholder="Brand name" />
+          ) : (
+            <form className="contact-form reveal" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="name">Name *</label>
+                  <input 
+                    id="name"
+                    name="name"
+                    type="text" 
+                    placeholder="Your full name" 
+                    required 
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email *</label>
+                  <input 
+                    id="email"
+                    name="email"
+                    type="email" 
+                    placeholder="name@company.com" 
+                    required 
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label>Project Type</label>
-                <input type="text" placeholder="e.g. Cinematic Edit, Brand Breakdown" />
+              
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="brand">Brand or Business Name</label>
+                  <input 
+                    id="brand"
+                    name="brand"
+                    type="text" 
+                    placeholder="Your brand / company" 
+                    value={formData.brand}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="website">Website or Social Profile</label>
+                  <input 
+                    id="website"
+                    name="website"
+                    type="text" 
+                    placeholder="@handle or yourwebsite.com" 
+                    value={formData.website}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="form-group">
-              <label>Budget</label>
-              <select defaultValue="">
-                <option value="" disabled>Select a range</option>
-                <option value="<5k">Under $5k</option>
-                <option value="5k-10k">$5k - $10k</option>
-                <option value="10k-25k">$10k - $25k</option>
-                <option value="25k+">$25k+</option>
-              </select>
-            </div>
+              <div className="form-group">
+                <label htmlFor="service">Service Required *</label>
+                <select 
+                  id="service"
+                  name="service"
+                  required
+                  value={formData.service}
+                  onChange={handleChange}
+                >
+                  <option value="" disabled>Select service needed</option>
+                  <option value="reels-shorts-tiktok">Instagram Reels, Shorts & TikTok</option>
+                  <option value="video-editing">Short-form Video Editing</option>
+                  <option value="motion-graphics">Motion Graphics & Visual Effects</option>
+                  <option value="scriptwriting">Scriptwriting & Storytelling</option>
+                  <option value="content-strategy">Content Strategy & Creative Direction</option>
+                  <option value="paid-ads">Paid Advertising Content</option>
+                  <option value="full-production">Full Content Production Retainer</option>
+                </select>
+              </div>
 
-            <div className="form-group">
-              <label>Message</label>
-              <textarea placeholder="Tell us about your project..." rows="4" required></textarea>
-            </div>
+              <div className="form-group">
+                <label htmlFor="details">Project Details *</label>
+                <textarea 
+                  id="details"
+                  name="details"
+                  placeholder="Tell us about your project, content goals, current posting volume, and target timeline..." 
+                  rows="4" 
+                  required
+                  value={formData.details}
+                  onChange={handleChange}
+                ></textarea>
+              </div>
 
-            <button type="submit" className="btn-submit" data-cursor="open">
-              START A PROJECT &rarr;
-            </button>
-          </form>
+              <button type="submit" className="btn-submit" data-cursor="open">
+                LET'S CREATE SOMETHING TOGETHER &rarr;
+              </button>
+            </form>
+          )}
 
           <div className="contact-sidebar reveal">
             <div className="sidebar-block">
-              <h3>Connect</h3>
-              <a href="https://www.instagram.com/castly.media" target="_blank" rel="noreferrer" className="social-link" data-cursor="open">
-                Instagram
+              <h3>Direct Email</h3>
+              <a href="mailto:hello@castly.media" className="social-link" data-cursor="open">
+                hello@castly.media
               </a>
             </div>
+
             <div className="sidebar-block">
-              <h3>Location</h3>
+              <h3>Instagram</h3>
+              <a href="https://www.instagram.com/castly.media" target="_blank" rel="noreferrer" className="social-link" data-cursor="open">
+                @castly.media &rarr;
+              </a>
+            </div>
+
+            <div className="sidebar-block">
+              <h3>Creative Philosophy</h3>
+              <p className="sidebar-quote">
+                “Attention is earned.<br/>Stories make it stay.”
+              </p>
+            </div>
+
+            <div className="sidebar-block">
+              <h3>Location & Collaboration</h3>
               <p>Remote / Worldwide</p>
             </div>
           </div>
