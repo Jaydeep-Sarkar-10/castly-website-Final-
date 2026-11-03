@@ -1,0 +1,67 @@
+.btn-collaborate {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  padding: 4px 58px 4px 26px;
+  border-radius: 9999px;
+  background-color: var(--text-primary);
+  color: var(--bg-base);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border: none;
+  cursor: none;
+  overflow: hidden;
+  margin-top: 24px;
+  width: fit-content;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+.btn-collaborate .btn-text {
+  position: relative;
+  z-index: 10;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.btn-collaborate .btn-icon-circle {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-collaborate:hover {
+  padding-left: 58px;
+  padding-right: 26px;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.12);
+}
+
+.btn-collaborate:hover .btn-icon-circle {
+  right: calc(100% - 47px);
+  transform: rotate(45deg);
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .btn-collaborate {
+    cursor: pointer;
+  }
+}
+

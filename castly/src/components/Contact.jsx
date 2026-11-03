@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ButtonWithIcon from '@/components/ui/button-witn-icon';
 import './Contact.css';
 
 export default function Contact() {
@@ -136,9 +137,11 @@ export default function Contact() {
                 ></textarea>
               </div>
 
-              <button type="submit" className="btn-submit" data-cursor="open">
-                LET'S CREATE SOMETHING TOGETHER &rarr;
-              </button>
+              <ButtonWithIcon 
+                type="submit" 
+                text="Let's Collaborate" 
+                data-cursor="open" 
+              />
             </form>
           )}
 
