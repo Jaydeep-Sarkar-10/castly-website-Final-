@@ -17,13 +17,13 @@ function ReelCard({ reel, onPlayVideo }) {
     <div 
       className="reel-item" 
       data-cursor="play"
-      onClick={() => onPlayVideo && onPlayVideo(reel)}
+      onClick={() => { if (onPlayVideo) onPlayVideo(reel); }}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onPlayVideo && onPlayVideo(reel);
+          if (onPlayVideo) onPlayVideo(reel);
         }
       }}
       onMouseEnter={() => {

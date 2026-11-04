@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { ExternalLink, Play, Eye, Sparkles, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, Play, Sparkles, TrendingUp, CheckCircle2 } from 'lucide-react';
 import './SelectedWork.css';
 
 function InstagramIcon({ size = 15, className = "" }) {
