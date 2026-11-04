@@ -1,5 +1,69 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import './Reels.css';
+
+function ReelCard({ reel, onPlayVideo }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.play().catch(() => {});
+    }
+  }, [reel.videoUrl]);
+
+  return (
+    <div 
+      className="reel-item" 
+      data-cursor="play"
+      onClick={() => onPlayVideo && onPlayVideo(reel)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onPlayVideo && onPlayVideo(reel);
+        }
+      }}
+      onMouseEnter={() => {
+        if (videoRef.current) {
+          videoRef.current.play().catch(() => {});
+        }
+      }}
+    >
+      <div className="reel-media">
+        <video
+          ref={videoRef}
+          src={reel.videoUrl}
+          className="reel-video"
+          autoPlay
+          muted
+          playsInline
+          loop
+          preload="auto"
+        >
+          <source src={reel.videoUrl} type="video/mp4" />
+        </video>
+        <div className="reel-top-badges">
+          <span className="reel-platform-tag">{reel.platform}</span>
+          <span className="reel-duration">{reel.duration}</span>
+        </div>
+        <div className="reel-overlay">
+          <div className="reel-play-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div className="reel-info">
+        <h4 className="reel-title">{reel.title}</h4>
+        <span className="reel-category">{reel.category}</span>
+      </div>
+    </div>
+  );
+}
 
 export default function Reels({ onPlayVideo }) {
   const reels = [
@@ -8,9 +72,8 @@ export default function Reels({ onPlayVideo }) {
       title: "The 3-Second Hook Rule",
       platform: "Instagram Reel",
       category: "Retention Psychology",
-      duration: "0:28",
-      thumbnail: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
-      videoUrl: "https://vjs.zencdn.net/v/oceans.mp4",
+      duration: "0:18",
+      videoUrl: "/videos/reel-1.mp4",
       desc: "Stop-the-scroll psychological hook designed to boost watch-time above 85%.",
       isVertical: true
     },
@@ -19,9 +82,8 @@ export default function Reels({ onPlayVideo }) {
       title: "Kinetic Typography Breakdown",
       platform: "TikTok",
       category: "Motion Graphics & VFX",
-      duration: "0:34",
-      thumbnail: "https://images.unsplash.com/photo-1503376712351-1f50a8b9e6dc?auto=format&fit=crop&w=600&q=80",
-      videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+      duration: "0:51",
+      videoUrl: "/videos/reel-2.mp4",
       desc: "Multi-layered kinetic typography with synchronized sound effects and 3D camera tracker.",
       isVertical: true
     },
@@ -30,9 +92,8 @@ export default function Reels({ onPlayVideo }) {
       title: "Creator Authority Engine",
       platform: "YouTube Short",
       category: "Personal Brand",
-      duration: "0:45",
-      thumbnail: "https://images.unsplash.com/photo-1616469829581-73993eb86b02?auto=format&fit=crop&w=600&q=80",
-      videoUrl: "https://vjs.zencdn.net/v/oceans.mp4",
+      duration: "0:55",
+      videoUrl: "/videos/reel-3.mp4",
       desc: "High-credibility talking head edit with punch-ins, b-roll overlays, and graphic highlights.",
       isVertical: true
     },
@@ -41,9 +102,8 @@ export default function Reels({ onPlayVideo }) {
       title: "Story Loop Framework",
       platform: "Instagram Reel",
       category: "Scriptwriting",
-      duration: "0:31",
-      thumbnail: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=600&q=80",
-      videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+      duration: "0:19",
+      videoUrl: "/videos/reel-4.mp4",
       desc: "Infinite loop narrative structure that prompts viewers to rewatch seamlessly.",
       isVertical: true
     },
@@ -52,9 +112,8 @@ export default function Reels({ onPlayVideo }) {
       title: "High-ROAS Product Drop",
       platform: "TikTok Ad",
       category: "Paid Advertising",
-      duration: "0:22",
-      thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
-      videoUrl: "https://vjs.zencdn.net/v/oceans.mp4",
+      duration: "0:26",
+      videoUrl: "/videos/reel-5.mp4",
       desc: "Direct-response e-commerce hook with fast rhythmic cuts and clear call to action.",
       isVertical: true
     },
@@ -63,9 +122,8 @@ export default function Reels({ onPlayVideo }) {
       title: "Real Estate Micro-Tour",
       platform: "YouTube Short",
       category: "Cinematic Showcase",
-      duration: "0:38",
-      thumbnail: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80",
-      videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+      duration: "0:35",
+      videoUrl: "/videos/reel-6.mp4",
       desc: "Architectural vertical showcase with speed ramps and ambient audio mastering.",
       isVertical: true
     }
@@ -84,39 +142,11 @@ export default function Reels({ onPlayVideo }) {
       <div className="reels-scroll-container">
         <div className="reels-gallery">
           {reels.map((reel) => (
-            <div 
+            <ReelCard 
               key={reel.id} 
-              className="reel-item" 
-              data-cursor="play"
-              onClick={() => onPlayVideo && onPlayVideo(reel)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  onPlayVideo && onPlayVideo(reel);
-                }
-              }}
-            >
-              <div className="reel-media">
-                <img src={reel.thumbnail} alt={reel.title} />
-                <div className="reel-top-badges">
-                  <span className="reel-platform-tag">{reel.platform}</span>
-                  <span className="reel-duration">{reel.duration}</span>
-                </div>
-                <div className="reel-overlay">
-                  <div className="reel-play-btn">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="reel-info">
-                <h4 className="reel-title">{reel.title}</h4>
-                <span className="reel-category">{reel.category}</span>
-              </div>
-            </div>
+              reel={reel} 
+              onPlayVideo={onPlayVideo} 
+            />
           ))}
         </div>
       </div>

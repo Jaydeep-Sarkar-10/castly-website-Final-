@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './VideoModal.css';
 
 export default function VideoModal({ video, onClose }) {
+  const videoRef = useRef(null);
+
   useEffect(() => {
     if (!video) return;
 
@@ -20,6 +22,22 @@ export default function VideoModal({ video, onClose }) {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [video, onClose]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // If browser policy blocks unmuted autoplay, smoothly fall back to muted autoplay
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.play().catch(() => {});
+          }
+        });
+      }
+    }
+  }, [video]);
 
   if (!video) return null;
 
@@ -43,13 +61,16 @@ export default function VideoModal({ video, onClose }) {
 
         <div className="video-modal-player-wrap">
           <video 
-            src={video.videoUrl || "https://vjs.zencdn.net/v/oceans.mp4"} 
+            key={video.videoUrl}
+            ref={videoRef}
+            src={video.videoUrl} 
             controls 
             autoPlay 
             playsInline
             className="video-modal-element"
-            poster={video.thumbnail || video.image}
+            preload="auto"
           >
+            <source src={video.videoUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
