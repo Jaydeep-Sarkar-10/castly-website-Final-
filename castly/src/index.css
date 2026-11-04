@@ -1,5 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap');
 
+@font-face {
+  font-family: 'Canela';
+  src: url('/Canela-Bold.woff2') format('woff2'),
+       local('Canela Bold Italic'),
+       local('Canela-BoldItalic'),
+       local('Canela Bold'),
+       local('Canela');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('/Canela-Bold.woff2') format('woff2'),
+       local('Canela Bold Italic'),
+       local('Canela-BoldItalic'),
+       local('Canela Bold'),
+       local('Canela');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   /* Editorial Dark Theme */
   --bg-base: #050505; /* Deep black/dark gray */
@@ -12,6 +36,7 @@
   --accent: #d4cfc5; /* Restrained accent */
   
   --font-heading: 'Instrument Serif', serif;
+  --font-canela: 'Canela', 'Instrument Serif', Georgia, serif;
   --font-body: 'DM Sans', sans-serif;
 }
 

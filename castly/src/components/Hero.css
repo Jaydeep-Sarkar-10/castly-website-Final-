@@ -98,6 +98,14 @@
   display: inline;
 }
 
+.hero-title .text-middle-gray,
+.hero-title .indent {
+  font-family: var(--font-canela, 'Canela', 'Instrument Serif', Georgia, serif);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
 .hero-bottom {
   display: flex;
   justify-content: space-between;

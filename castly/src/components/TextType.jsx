@@ -94,8 +94,10 @@ const TextType = ({
           50% { opacity: 0; }
         }
         .text-middle-gray {
-          color: var(--text-secondary);
+          font-family: var(--font-canela, 'Canela', 'Instrument Serif', Georgia, serif);
           font-style: italic;
+          font-weight: 700;
+          color: var(--text-secondary);
         }
       `}</style>
     </span>
