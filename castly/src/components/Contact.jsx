@@ -104,6 +104,37 @@ export default function Contact() {
             </div>
 
             <div className="sidebar-block">
+              <h3>Direct Email</h3>
+              <a 
+                href="mailto:heycastly@gmail.com" 
+                className="social-link" 
+                data-cursor="open"
+              >
+                heycastly@gmail.com
+              </a>
+            </div>
+
+            <div className="sidebar-block">
+              <h3>Direct Phone / WhatsApp</h3>
+              <div className="phone-links">
+                <a 
+                  href="tel:+917717570115" 
+                  className="social-link" 
+                  data-cursor="open"
+                >
+                  +91 77175 70115
+                </a>
+                <a 
+                  href="tel:+918284995524" 
+                  className="social-link" 
+                  data-cursor="open"
+                >
+                  +91 82849 95524
+                </a>
+              </div>
+            </div>
+
+            <div className="sidebar-block">
               <h3>Instagram</h3>
               <a 
                 href="https://www.instagram.com/castly.media" 
