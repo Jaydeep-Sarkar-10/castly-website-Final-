@@ -50,8 +50,8 @@ function App() {
       title: "Castly.Media Official Showreel",
       category: "Cinematic Showreel",
       desc: "Our best editing, sound design, motion graphics, and visual storytelling.",
-      videoUrl: "https://vjs.zencdn.net/v/oceans.mp4",
-      isVertical: false
+      videoUrl: "/videos/Watchshowreel.mp4",
+      isVertical: true
     });
   };
 

@@ -144,7 +144,7 @@ export default function SelectedWork({ onPlayVideo }) {
       category: "Client Project | Personal Brand & Short-Form Content",
       industry: "Entrepreneurship & Modern Marketing",
       tagline: "Personal brand content engine on business growth, e-commerce, advertising, and AI",
-      previewVideo: "/videos/reel-1.mp4",
+      previewVideo: "/videos/work2.mp4",
       badge: "Personal Brand Engine",
       about: "Dylan Pondir is an entrepreneur and marketing professional who shares insights on business growth, e-commerce, digital marketing, advertising, and AI. Through his personal brand, he focuses on sharing knowledge, ideas, and strategies that help business owners understand modern marketing and grow their businesses.",
       howCastlyHelped: "We collaborated with Dylan Pondir to bring his personal brand content to life through creative short-form video editing and visual storytelling. Our focus was to transform his ideas and expertise into engaging videos that communicate his message clearly while keeping viewers interested. We combined creative editing, motion graphics, sound design, and visual elements to give his content a polished and engaging presentation.",
@@ -186,7 +186,7 @@ export default function SelectedWork({ onPlayVideo }) {
       industry: "Global Media & Brand Distribution",
       tagline: "High-retention storytelling across technology, business, psychology, and automotive",
       badge: "933K+ Viral Case Study",
-      previewVideo: "/videos/reel-6.mp4",
+      previewVideo: "/videos/work3.mp4",
       metrics: [
         { value: "933K", label: "NVIDIA & Hugging Face Story" },
         { value: "156K", label: "Porsche Automotive Story" },
