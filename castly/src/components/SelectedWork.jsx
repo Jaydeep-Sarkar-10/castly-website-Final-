@@ -75,7 +75,16 @@ function CaseStudyVideoCard({ project, onPlayVideo }) {
         </video>
 
         <div className="case-study-media-badges">
-          <span className="case-study-tag">Case Study {project.index}</span>
+          <div className="case-study-badge-tag-wrap">
+            {project.logo && (
+              <img 
+                src={project.logo} 
+                alt={`${project.client} logo`}
+                className="case-study-badge-avatar"
+              />
+            )}
+            <span className="case-study-tag">Case Study {project.index}</span>
+          </div>
           {project.badge && (
             <span className="case-study-viral-badge">
               <TrendingUp size={12} />
@@ -101,6 +110,7 @@ export default function SelectedWork({ onPlayVideo }) {
       id: "earnedits",
       index: "01",
       client: "EARN EDITS",
+      logo: "/earnedits-logo.png",
       category: "Client Project | Video Editing & Creative Content",
       industry: "Creator Economy / SaaS",
       tagline: "Editable AE project files & tutorials for professional video editors",
@@ -141,6 +151,7 @@ export default function SelectedWork({ onPlayVideo }) {
       id: "dylan-pondir",
       index: "02",
       client: "DYLAN PONDIR",
+      logo: "/dylan-pondir-logo.png",
       category: "Client Project | Personal Brand & Short-Form Content",
       industry: "Entrepreneurship & Modern Marketing",
       tagline: "Personal brand content engine on business growth, e-commerce, advertising, and AI",
@@ -182,6 +193,7 @@ export default function SelectedWork({ onPlayVideo }) {
       id: "asylum-decoded",
       index: "03",
       client: "ASYLUM DECODED",
+      logo: "/asylum-decoded-logo.png",
       category: "Client Project | Content Editing & Creative Production",
       industry: "Global Media & Brand Distribution",
       tagline: "High-retention storytelling across technology, business, psychology, and automotive",
@@ -265,7 +277,21 @@ export default function SelectedWork({ onPlayVideo }) {
                 </div>
 
                 <div className="case-study-name-row">
-                  <h3 className="case-study-client-title">{project.client}</h3>
+                  <div className="case-study-title-group">
+                    {project.logo && (
+                      <div className="case-study-logo-wrap">
+                        <img 
+                          src={project.logo} 
+                          alt={`${project.client} logo`}
+                          className="case-study-client-logo"
+                          width="48"
+                          height="48"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <h3 className="case-study-client-title">{project.client}</h3>
+                  </div>
                   {project.website && (
                     <a
                       href={project.website}
