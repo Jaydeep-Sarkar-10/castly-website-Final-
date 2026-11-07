@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<body>
+<img id="src" src="/favicon.png" />
+<script>
+  window.onload = async () => {
+    const img = document.getElementById('src');
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+
+    // First, analyze exact circle center and diameter using radial gradient edge detection
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const data = imgData.data;
+
+    // Corner background color
+    const bgR = data[0], bgG = data[1], bgB = data[2];
+
+    // Find precise edges
+    // Left edge on line y = 360
+    let leftEdge = 0;
+    for (let x = 0; x < w; x++) {
+      const idx = (360 * w + x) * 4;
+      const diff = Math.abs(data[idx] - bgR) + Math.abs(data[idx+1] - bgG) + Math.abs(data[idx+2] - bgB);
+      if (diff > 12) { leftEdge = x; break; }
+    }
+
+    // Right edge on line y = 360
+    let rightEdge = w - 1;
+    for (let x = w - 1; x >= 0; x--) {
+      const idx = (360 * w + x) * 4;
+      const diff = Math.abs(data[idx] - bgR) + Math.abs(data[idx+1] - bgG) + Math.abs(data[idx+2] - bgB);
+      if (diff > 12) { rightEdge = x; break; }
+    }
+
+    // Top edge on line x = Math.round((leftEdge + rightEdge) / 2)
+    const midX = Math.round((leftEdge + rightEdge) / 2);
+    let topEdge = 0;
+    for (let y = 0; y < h; y++) {
+      const idx = (y * w + midX) * 4;
+      const diff = Math.abs(data[idx] - bgR) + Math.abs(data[idx+1] - bgG) + Math.abs(data[idx+2] - bgB);
+      if (diff > 12) { topEdge = y; break; }
+    }
+
+    // Bottom edge on line x = midX
+    let bottomEdge = h - 1;
+    for (let y = h - 1; y >= 0; y--) {
+      const idx = (y * w + midX) * 4;
+      const diff = Math.abs(data[idx] - bgR) + Math.abs(data[idx+1] - bgG) + Math.abs(data[idx+2] - bgB);
+      if (diff > 12) { bottomEdge = y; break; }
+    }
+
+    console.log('Edges:', { leftEdge, rightEdge, topEdge, bottomEdge });
+    const circleW = rightEdge - leftEdge;
+    const circleH = bottomEdge - topEdge;
+    const cx = (leftEdge + rightEdge) / 2;
+    const cy = (topEdge + bottomEdge) / 2;
+    const radius = Math.min(circleW, circleH) / 2;
+
+    console.log('Center:', cx, cy, 'Radius:', radius);
+
+    // Function to render a masked, perfectly centered circular favicon
+    function renderFavicon(targetSize) {
+      const c = document.createElement('canvas');
+      c.width = targetSize;
+      c.height = targetSize;
+      const g = c.getContext('2d');
+
+      g.imageSmoothingEnabled = true;
+      g.imageSmoothingQuality = 'high';
+
+      // Circular clip path with slight 0.5px inset for anti-aliasing
+      g.beginPath();
+      g.arc(targetSize / 2, targetSize / 2, (targetSize / 2) - 0.25, 0, Math.PI * 2);
+      g.closePath();
+      g.clip();
+
+      // Source square coordinates centered exactly at (cx, cy)
+      const srcSize = radius * 2;
+      const sx = cx - radius;
+      const sy = cy - radius;
+
+      g.drawImage(img, sx, sy, srcSize, srcSize, 0, 0, targetSize, targetSize);
+
+      return c.toDataURL('image/png');
+    }
+
+    const master512 = renderFavicon(512);
+    const size48 = renderFavicon(48);
+    const size32 = renderFavicon(32);
+
+    await fetch('/save-favicons', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        master512,
+        size48,
+        size32,
+        details: { cx, cy, radius, leftEdge, rightEdge, topEdge, bottomEdge }
+      })
+    });
+  };
+</script>
+</body>
+</html>
+
