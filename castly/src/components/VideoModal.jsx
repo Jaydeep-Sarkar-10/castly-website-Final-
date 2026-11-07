@@ -4,6 +4,7 @@ import './VideoModal.css';
 export default function VideoModal({ video, onClose }) {
   const videoRef = useRef(null);
 
+  // Handle escape key and lock body scroll
   useEffect(() => {
     if (!video) return;
 
@@ -23,19 +24,50 @@ export default function VideoModal({ video, onClose }) {
     };
   }, [video, onClose]);
 
+  // Pause all background videos while modal is open to free GPU decoder pipelines
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // If browser policy blocks unmuted autoplay, smoothly fall back to muted autoplay
-          if (videoRef.current) {
-            videoRef.current.muted = true;
-            videoRef.current.play().catch(() => {});
-          }
-        });
+    if (!video) return;
+
+    // Find all other video elements on the page (Hero, SelectedWork, Reels)
+    const otherVideos = Array.from(document.querySelectorAll('video')).filter(
+      (v) => v !== videoRef.current
+    );
+
+    // Track which background videos were actively playing so we can restore them on close
+    const pausedByModal = [];
+    otherVideos.forEach((v) => {
+      if (!v.paused) {
+        pausedByModal.push(v);
+        try {
+          v.pause();
+        } catch (_) {}
       }
+    });
+
+    return () => {
+      // Resume only the videos that were playing before
+      pausedByModal.forEach((v) => {
+        try {
+          v.play().catch(() => {});
+        } catch (_) {}
+      });
+    };
+  }, [video]);
+
+  // Handle modal video playback smoothly
+  useEffect(() => {
+    if (!video || !videoRef.current) return;
+
+    const currentVid = videoRef.current;
+    const playPromise = currentVid.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Fall back to muted autoplay if browser autoplay policy restricts unmuted audio
+        if (currentVid) {
+          currentVid.muted = true;
+          currentVid.play().catch(() => {});
+        }
+      });
     }
   }, [video]);
 
@@ -70,7 +102,6 @@ export default function VideoModal({ video, onClose }) {
             className="video-modal-element"
             preload="auto"
           >
-            <source src={video.videoUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
